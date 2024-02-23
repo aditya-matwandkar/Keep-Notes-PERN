@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { Link } from "react-router-dom";
 import { styled } from "@mui/material";
 import { Card, CardActions, CardContent, Typography } from "@mui/material";
 import { ArchiveOutlined, DeleteOutlined } from "@mui/icons-material";
@@ -80,23 +81,32 @@ function Note({ note }) {
   return (
     <>
       <StyledCard>
-        <CardContent>
-          <Typography
-            style={{
-              fontSize: "1.5rem",
-              marginBottom: "16px",
-              fontFamily: "Open sans",
-              marginTop: "-8px",
-            }}
-          >
-            {note.title}
-          </Typography>
-          <Typography
-            style={{ fontFamily: "Open sans", whiteSpace: "pre-wrap" }}
-          >
-            {note.content}
-          </Typography>
-        </CardContent>
+        <Link
+          to={"/" + note.note_id}
+          style={{
+            textDecoration: "none",
+            color: "inherit",
+            cursor: "default",
+          }}
+        >
+          <CardContent>
+            <Typography
+              style={{
+                fontSize: "1.5rem",
+                marginBottom: "16px",
+                fontFamily: "Open sans",
+                marginTop: "-8px",
+              }}
+            >
+              {note.title}
+            </Typography>
+            <Typography
+              style={{ fontFamily: "Open sans", whiteSpace: "pre-wrap" }}
+            >
+              {note.content}
+            </Typography>
+          </CardContent>
+        </Link>
         <CardActions>
           <ArchiveOutlined
             fontSize="small"

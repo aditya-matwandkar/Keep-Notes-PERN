@@ -33,12 +33,32 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-// Route to delete a note by ID
-router.delete("/:id", async (req, res, next) => {
+
+// Route to get a note by ID
+router.get("/note/:id", async (req, res, next) => {
   const note_id = req.params.id;
   try {
-    await db.query("DELETE FROM notes WHERE note_id = $1", [note_id]);
-    res.sendStatus(204);
+    const response = await db.query("SELECT * FROM notes WHERE note_id = $1", [
+      note_id,
+    ]);
+    res.json(response.rows);
+  } catch (err) {
+    next(err);
+  }
+});
+
+
+// Route to get a note by ID
+router.patch("/note/:id", async (req, res, next) => {
+  const note_id = req.params.id;
+  const { title, content } = req.body;
+  try {
+    await db.query(`
+      UPDATE notes
+      SET title = $1, content = $2
+      WHERE note_id = $3
+    `, [title, content, note_id]);
+    res.sendStatus(200).redirect("/");
   } catch (err) {
     next(err);
   }

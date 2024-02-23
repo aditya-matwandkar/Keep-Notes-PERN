@@ -4,6 +4,7 @@ import { Box, TextField, ClickAwayListener, Button } from "@mui/material";
 import { DataContext } from "../../context/DataProvider";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
+import { Slide, toast } from "react-toastify";
 
 const BoxContainer = styled(Box)({
   display: "flex",
@@ -31,12 +32,12 @@ function Form() {
   const { notes, setNotes } = useContext(DataContext);
   const [addNote, setAddNote] = useState({ ...note, id: uuidv4() });
 
-  const handelTitleForm = () => {
+  const handleTitleForm = () => {
     setShowTitleForm(true);
     adjustHeight.current.style.minHeight = "150px";
   };
 
-  const handelClickAway = async () => {
+  const handleClickAway = async () => {
     setShowTitleForm(false);
     adjustHeight.current.style.minHeight = "30px";
 
@@ -66,12 +67,12 @@ function Form() {
     setAddNote({ ...note, id: uuidv4(), title: "", content: "" });
   };
 
-  const handelChange = (e) => {
+  const handleChange = (e) => {
     setAddNote({ ...addNote, [e.target.name]: e.target.value });
   };
 
   return (
-    <ClickAwayListener onClickAway={handelClickAway}>
+    <ClickAwayListener onClickAway={handleClickAway}>
       <BoxContainer ref={adjustHeight}>
         {showTitleForm && (
           <TextField
@@ -80,7 +81,7 @@ function Form() {
             autoComplete="off"
             InputProps={{ disableUnderline: true }}
             style={{ marginBottom: "10px" }}
-            onChange={(e) => handelChange(e)}
+            onChange={(e) => handleChange(e)}
             name="title"
             value={addNote.title}
           />
@@ -91,8 +92,8 @@ function Form() {
           InputProps={{ disableUnderline: true }}
           multiline
           maxRows={Infinity}
-          onClick={handelTitleForm}
-          onChange={(e) => handelChange(e)}
+          onClick={handleTitleForm}
+          onChange={(e) => handleChange(e)}
           name="content"
           value={addNote.content}
         />
@@ -105,7 +106,7 @@ function Form() {
               color: "#606060",
               fontSize: "14px",
             }}
-            onClick={handelClickAway}
+            onClick={handleClickAway}
           >
             Add
           </Button>

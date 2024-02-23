@@ -132,4 +132,34 @@ router.post("/trash", async (req, res, next) => {
   }
 });
 
+// Route to get a archive note by ID
+router.get("/:id", async (req, res, next) => {
+  const note_id = req.params.id;
+  try {
+    const response = await db.query("SELECT * FROM archives WHERE note_id = $1", [
+      note_id,
+    ]);
+    res.json(response.rows);
+  } catch (err) {
+    next(err);
+  }
+});
+
+
+// Route to get a note by ID
+router.patch("/:id", async (req, res, next) => {
+  const note_id = req.params.id;
+  const { title, content } = req.body;
+  try {
+    await db.query(`
+      UPDATE archives
+      SET title = $1, content = $2
+      WHERE note_id = $3
+    `, [title, content, note_id]);
+    res.sendStatus(200).redirect("/");
+  } catch (err) {
+    next(err);
+  }
+});
+
 export default router;

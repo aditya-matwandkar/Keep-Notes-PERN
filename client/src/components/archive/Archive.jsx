@@ -5,6 +5,7 @@ import { UnarchiveOutlined, DeleteOutlined } from "@mui/icons-material";
 import { DataContext } from "../../context/DataProvider";
 import { Slide, toast } from "react-toastify";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const StyledCard = styled(Card)`
   width: 280px;
@@ -24,11 +25,14 @@ function Archive({ note }) {
 
   const [loading, setLoading] = useState(true);
 
-  const unarchiveNote = async(note) => {
+  const unarchiveNote = async (note) => {
     try {
-      const response = await axios.post("http://localhost:3000/archives/unarchive", {
-        id: note.note_id,
-      });
+      const response = await axios.post(
+        "http://localhost:3000/archives/unarchive",
+        {
+          id: note.note_id,
+        }
+      );
       setNotes(response.data);
       toast.success("Note unarchived", {
         position: "bottom-left",
@@ -51,11 +55,14 @@ function Archive({ note }) {
     }
   };
 
-  const deleteNote = async(note) => {
+  const deleteNote = async (note) => {
     try {
-      const response = await axios.post("http://localhost:3000/archives/trash", {
-        id: note.note_id,
-      });
+      const response = await axios.post(
+        "http://localhost:3000/archives/trash",
+        {
+          id: note.note_id,
+        }
+      );
       setDeletedNotes(response.data);
       toast.info("Note deleted", {
         position: "bottom-left",
@@ -81,23 +88,32 @@ function Archive({ note }) {
   return (
     <>
       <StyledCard>
-        <CardContent>
-          <Typography
-            style={{
-              fontSize: "1.5rem",
-              marginBottom: "16px",
-              fontFamily: "Open sans",
-              marginTop: "-8px",
-            }}
-          >
-            {note.title}
-          </Typography>
-          <Typography
-            style={{ fontFamily: "Open sans", whiteSpace: "pre-wrap" }}
-          >
-            {note.content}
-          </Typography>
-        </CardContent>
+        <Link
+          to={"/archives/" + note.note_id}
+          style={{
+            textDecoration: "none",
+            color: "inherit",
+            cursor: "default",
+          }}
+        >
+          <CardContent>
+            <Typography
+              style={{
+                fontSize: "1.5rem",
+                marginBottom: "16px",
+                fontFamily: "Open sans",
+                marginTop: "-8px",
+              }}
+            >
+              {note.title}
+            </Typography>
+            <Typography
+              style={{ fontFamily: "Open sans", whiteSpace: "pre-wrap" }}
+            >
+              {note.content}
+            </Typography>
+          </CardContent>
+        </Link>
         <CardActions>
           <UnarchiveOutlined
             fontSize="small"
