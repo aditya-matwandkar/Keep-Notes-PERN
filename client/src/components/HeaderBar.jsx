@@ -28,9 +28,9 @@ function HeaderBar({ open, handleDrawer }) {
           <MenuIcon />
         </IconButton>
         <img
-          src="/google-keep-logo.png"
+          src="/google-keep-icon.svg"
           alt="keep logo"
-          style={{ height: "48px", marginRight: "12px" }}
+          style={{ height: "50px", marginRight: "12px" }}
         ></img>
         <LogoName>Keep</LogoName>
       </Toolbar>
