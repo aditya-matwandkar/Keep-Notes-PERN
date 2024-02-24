@@ -16,6 +16,14 @@ function Notes() {
     useContext(DataContext);
   const [loading, setLoading] = useState(true);
 
+  const [notesUpdated, setNotesUpdated] = useState(false);
+
+  // Callback function to trigger a re-render of the Notes component whenever Form is submitted
+  const handleNotesUpdate = () => {
+    setNotesUpdated(!notesUpdated);
+  };
+
+  // Fetch the data from notes table
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -28,13 +36,13 @@ function Notes() {
     };
 
     fetchData();
-  }, [setNotes, notes, archivedNotes, deletedNotes]);
+  }, [archivedNotes, deletedNotes, notesUpdated]);
 
   return (
     <Box sx={{ display: "flex", width: "100%" }}>
       <Box sx={{ p: 3, width: "100%" }}>
         <DrawerHeader />
-        <Form />
+        <Form onNotesUpdate={handleNotesUpdate} />
 
         {loading ? (
           <p>Loading...</p>

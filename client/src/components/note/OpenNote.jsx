@@ -2,10 +2,10 @@ import React, { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { styled } from "@mui/material";
-import { Card, Button, TextField, CardActions } from "@mui/material";
+import { Card, Button, TextField, IconButton } from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import "./openNote.css";
 import axios from "axios";
-import { DataContext } from "../../context/DataProvider";
 import { Slide, toast } from "react-toastify";
 
 const StyledCard = styled(Card)({
@@ -27,8 +27,6 @@ const StyledCard = styled(Card)({
 function OpenNote() {
   const { note_id } = useParams();
 
-  const { notes, setNotes } = useContext(DataContext);
-
   const [editNote, setEditNote] = useState({
     id: "",
     note_id: "",
@@ -39,6 +37,7 @@ function OpenNote() {
 
   const [Loading, setLoading] = useState(true);
 
+  // Ftech the data of note using id
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -59,6 +58,7 @@ function OpenNote() {
     setEditNote({ ...editNote, [e.target.name]: e.target.value });
   };
 
+  // Update note in notes table
   const handleUpdate = async () => {
     try {
       const response = await axios.patch(
@@ -68,7 +68,6 @@ function OpenNote() {
           content: editNote.content,
         }
       );
-      setNotes([...notes, response.data]);
       toast.success("Note updated", {
         position: "bottom-left",
         autoClose: 3000,
@@ -90,6 +89,15 @@ function OpenNote() {
 
   return (
     <>
+      <Link to={"/"}>
+        <IconButton
+          aria-label="back"
+          size="large"
+          style={{ height: "50px", width: "50px", marginTop: "80px" }}
+        >
+          <ArrowBackIcon fontSize="inherit" />
+        </IconButton>
+      </Link>
       <StyledCard>
         <TextField
           style={{
@@ -128,18 +136,36 @@ function OpenNote() {
           maxRows={Infinity}
           onChange={handleChange}
         />
-        <Link to={"/"} style={{ alignSelf: "flex-end", justifySelf: "end" }}>
-          <Button
-            style={{
-              width: "38px",
-              color: "#606060",
-              fontSize: "14px",
-            }}
-            onClick={handleUpdate}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginTop: "15px",
+          }}
+        >
+          <div
+            style={{ color: "#989898", fontSize: "15px", cursor: "default" }}
           >
-            Update
-          </Button>
-        </Link>
+            {editNote.date.slice(8, 10) +
+              "-" +
+              editNote.date.slice(5, 7) +
+              "-" +
+              editNote.date.slice(0, 4)}
+          </div>
+          <Link to={"/"}>
+            <Button
+              style={{
+                width: "38px",
+                color: "#606060",
+                fontSize: "14px",
+              }}
+              onClick={handleUpdate}
+            >
+              Update
+            </Button>
+          </Link>
+        </div>
       </StyledCard>
     </>
   );

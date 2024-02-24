@@ -19,13 +19,14 @@ const BoxContainer = styled(Box)({
   margin: "auto",
 });
 
+// New note
 const note = {
   id: "",
   title: "",
   content: "",
 };
 
-function Form() {
+function Form({ onNotesUpdate }) {
   const [showTitleForm, setShowTitleForm] = useState(false);
   const adjustHeight = useRef();
 
@@ -50,7 +51,6 @@ function Form() {
           content: addNote.content,
         });
         // Update notes state with existing notes plus the newly added note
-        setNotes([...notes, response.data]);
       } catch (error) {
         console.error("Error adding note:", error);
         toast.error("Error saving note", {
@@ -65,6 +65,7 @@ function Form() {
 
     // Reset addNote state to initial values
     setAddNote({ ...note, id: uuidv4(), title: "", content: "" });
+    onNotesUpdate();
   };
 
   const handleChange = (e) => {

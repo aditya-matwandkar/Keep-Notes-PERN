@@ -2,8 +2,6 @@ import * as React from "react";
 import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
-
-// components
 import HeaderBar from "./HeaderBar";
 import NavMenuList from "./NavMenuList";
 

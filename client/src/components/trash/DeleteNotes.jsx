@@ -15,6 +15,7 @@ function DeleteNotes() {
     useContext(DataContext);
   const [loading, setLoading] = useState(true);
 
+  // Fetech data from trash table
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -27,7 +28,7 @@ function DeleteNotes() {
     };
 
     fetchData();
-  }, [notes, archivedNotes, deletedNotes]);
+  }, [notes, archivedNotes]);
 
   return (
     <Box sx={{ display: "flex", width: "100%" }}>

@@ -27,12 +27,11 @@ router.post("/", async (req, res, next) => {
       "INSERT INTO notes (id, note_id, title, content, date) VALUES ($1, $2, $3, $4, CURRENT_DATE)",
       [Date.now(), id, title, content]
     );
-    res.redirect("/");
+    res.sendStatus(200);
   } catch (err) {
     next(err);
   }
 });
-
 
 // Route to get a note by ID
 router.get("/note/:id", async (req, res, next) => {
@@ -47,18 +46,20 @@ router.get("/note/:id", async (req, res, next) => {
   }
 });
 
-
 // Route to get a note by ID
 router.patch("/note/:id", async (req, res, next) => {
   const note_id = req.params.id;
   const { title, content } = req.body;
   try {
-    await db.query(`
+    await db.query(
+      `
       UPDATE notes
       SET title = $1, content = $2
       WHERE note_id = $3
-    `, [title, content, note_id]);
-    res.sendStatus(200).redirect("/");
+    `,
+      [title, content, note_id]
+    );
+    res.sendStatus(200);
   } catch (err) {
     next(err);
   }

@@ -15,6 +15,7 @@ function Archives() {
     useContext(DataContext);
   const [Loading, setLoading] = useState(true);
 
+  // Fetch the data from archives table
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -27,7 +28,7 @@ function Archives() {
     };
 
     fetchData();
-  }, [notes, archivedNotes, deletedNotes]);
+  }, [notes, deletedNotes]);
 
   return (
     <Box sx={{ display: "flex", width: "100%" }}>

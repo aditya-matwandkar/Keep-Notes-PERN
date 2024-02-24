@@ -19,11 +19,12 @@ const StyledCard = styled(Card)`
 `;
 
 function DeleteNote({ note }) {
-  const { setNotes, deletedNotes, setDeletedNotes } = useContext(DataContext);
+  const { setNotes, setDeletedNotes } = useContext(DataContext);
 
   const [loading, setLoading] = useState(true);
 
-  const restoreNote = async(note) => {
+  // Function to restore the note
+  const restoreNote = async (note) => {
     try {
       const response = await axios.post("http://localhost:3000/trash/restore", {
         id: note.note_id,
@@ -50,9 +51,12 @@ function DeleteNote({ note }) {
     }
   };
 
-  const deleteNoteForever = async(note) => {
+  // Function to delete note premanently
+  const deleteNoteForever = async (note) => {
     try {
-      const response = await axios.delete(`http://localhost:3000/trash/${note.note_id}`);
+      const response = await axios.delete(
+        `http://localhost:3000/trash/${note.note_id}`
+      );
       setDeletedNotes(response.data);
       toast.error("Note deleted permanently", {
         position: "bottom-left",
@@ -90,18 +94,25 @@ function DeleteNote({ note }) {
             {note.title}
           </Typography>
           <Typography
-            style={{ fontFamily: "Open sans", whiteSpace: "pre-wrap" }}
+            style={{
+              fontFamily: "Open sans",
+              whiteSpace: "pre-wrap",
+              maxHeight: "380px",
+              overflow: "hidden",
+            }}
           >
             {note.content}
           </Typography>
         </CardContent>
         <CardActions>
           <CachedOutlined
+            titleAccess="Restore"
             fontSize="small"
             style={{ marginLeft: "auto", cursor: "pointer" }}
             onClick={() => restoreNote(note)}
           />
           <DeleteForeverOutlined
+            titleAccess="Delete"
             fontSize="small"
             style={{ cursor: "pointer" }}
             onClick={() => deleteNoteForever(note)}

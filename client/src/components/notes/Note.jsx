@@ -20,10 +20,10 @@ const StyledCard = styled(Card)`
 `;
 
 function Note({ note }) {
-  const { notes, setNotes, setArchivedNotes, setDeletedNotes } =
-    useContext(DataContext);
+  const { setArchivedNotes, setDeletedNotes } = useContext(DataContext);
   const [loading, setLoading] = useState(true);
 
+  // Function to archive the note
   const archiveNote = async (note) => {
     try {
       const response = await axios.post("http://localhost:3000/archives", {
@@ -51,6 +51,7 @@ function Note({ note }) {
     }
   };
 
+  // Function to move note in trash
   const deleteNote = async (note) => {
     try {
       const response = await axios.post("http://localhost:3000/trash", {
@@ -101,7 +102,12 @@ function Note({ note }) {
               {note.title}
             </Typography>
             <Typography
-              style={{ fontFamily: "Open sans", whiteSpace: "pre-wrap" }}
+              style={{
+                fontFamily: "Open sans",
+                whiteSpace: "pre-wrap",
+                maxHeight: "380px",
+                overflow: "hidden",
+              }}
             >
               {note.content}
             </Typography>
@@ -109,11 +115,13 @@ function Note({ note }) {
         </Link>
         <CardActions>
           <ArchiveOutlined
+            titleAccess="Archive"
             fontSize="small"
             style={{ marginLeft: "auto", cursor: "pointer" }}
             onClick={() => archiveNote(note)}
           />
           <DeleteOutlined
+            titleAccess="Move to trash"
             fontSize="small"
             style={{ cursor: "pointer" }}
             onClick={() => deleteNote(note)}
