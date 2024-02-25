@@ -47,7 +47,7 @@ function Notes() {
         {loading ? (
           <p>Loading...</p>
         ) : notes.length > 0 ? (
-          <Grid container sx={{ marginTop: "20px" }}>
+          <Grid container sx={{ marginTop: "28px" }}>
             {notes.map((note) => (
               <Grid item key={note.note_id}>
                 <Note note={note} />
