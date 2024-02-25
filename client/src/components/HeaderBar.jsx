@@ -9,7 +9,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 const AppBar = styled(MuiAppBar)({
   zIndex: "1300",
   background: "#fff",
-  height: "70px",
+  height: "72px",
   boxShadow: "inset 0 -1px 0 0 #dadce0",
   display: "flex",
   justifyContent: "center",

@@ -153,7 +153,7 @@ function OpenArchive() {
               "-" +
               editArchive.date.slice(0, 4)}
           </div>
-          <Link to={"/"}>
+          <Link to={"/archives"}>
             <Button
               style={{
                 width: "38px",

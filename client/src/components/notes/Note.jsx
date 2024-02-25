@@ -8,7 +8,7 @@ import { Slide, toast } from "react-toastify";
 import axios from "axios";
 
 const StyledCard = styled(Card)`
-  width: 280px;
+  width: 260px;
   margin: 8px;
   box-shadow: none;
   border: 1px solid #e0e0e0;
